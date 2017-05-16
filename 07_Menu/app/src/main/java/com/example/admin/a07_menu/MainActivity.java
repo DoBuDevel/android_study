@@ -11,13 +11,14 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView tv;
-
+    Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         tv = (TextView)findViewById(R.id.TextView);
         registerForContextMenu(tv); // 위젯에 ContextMenu를 등록함
 
+        // 버튼을 context 메뉴에 등록
+        btn = (Button) findViewById(R.id.button2);
+        registerForContextMenu(btn);
     }
 
     // 옵션 메뉴를 추가한다. (보통 xml 로 작성한다.)
@@ -58,11 +62,18 @@ public class MainActivity extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         Log.d("test", "onCreateContextMenu");
-
-        menu.setHeaderTitle("title");
-        menu.add(0,1,100,"one");
-        menu.add(0,2,100,"two");
-        menu.add(0,3,100,"three");
+        if(v == tv){
+            menu.setHeaderTitle("title");
+            menu.add(0,1,100,"one");
+            menu.add(0,2,100,"two");
+            menu.add(0,3,100,"three");
+        }
+        if(v == btn){
+            menu.setHeaderTitle("button");
+            menu.add(0,1,100,"btn_one");
+            menu.add(0,2,100,"btn_two");
+            menu.add(0,3,100,"btn_three");
+        }
 
     }
 
@@ -83,5 +94,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onContextItemSelected(item);
     }
-
 }
